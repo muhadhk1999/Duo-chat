@@ -5,10 +5,9 @@ import generateTokenAndSetCookie from "../utils/generateToken.js";
 export const signup = async (req,res) =>{
     try {
         const {fullName ,username, password, confirmPassword ,gender} = req.body;
-        console.log(fullName ,username, password, confirmPassword ,gender);
 
         if(password !== confirmPassword){
-            return res.status(400).json({error:"password donot match"})
+            return res.status(400).json({error:"passwords donot match"})
         }
         const user = await User.findOne({username})
         
@@ -20,10 +19,10 @@ export const signup = async (req,res) =>{
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password,salt)
 
-        // http:avathar-placeholder.iran.liara.run/
+        // http:avathar-placeholder.iran.liara.run  
 
-        const boyProfilePic = `http:avathar-placeholder.iran.liara.run/public/boy?username=${username}`
-        const girlProfilePic = `http:avathar-placeholder.iran.liara.run/public/girl?username=${username}`
+        const boyProfilePic =  "https://avatar.iran.liara.run/public/boy";
+        const girlProfilePic = "https://avatar.iran.liara.run/public/girl";
 
         const newUser = new User({
             fullName,
@@ -36,8 +35,7 @@ export const signup = async (req,res) =>{
 
         if(newUser){
         // generate jwt 
-        await generateTokenAndSetCookie(newUser._id,res)
-
+        generateTokenAndSetCookie(newUser._id,res)
         await newUser.save();
 
         
@@ -52,7 +50,6 @@ export const signup = async (req,res) =>{
         }
 
         } catch (error) {
-            console.log("error in signup controller", error.message);
             res.status(500).json({error:"internal server error"})
     }
 }
@@ -78,7 +75,6 @@ export const login =async (req,res) =>{
         })
     
     } catch (error) {
-        console.log("error in login controller", error.message);
         res.status(500).json({error:"internal server error"})
     }
 }
@@ -88,7 +84,6 @@ export const logout = (req,res) =>{
         res.cookie("jwt","",{maxAge:0})
         res.status(200).json({message:"logged out successfully"})
     } catch (error) {
-        console.log("error in logout controller", error.message);
         res.status(500).json({error:"internal server error"})
     }
 }
