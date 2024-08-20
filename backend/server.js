@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import cors from 'cors';
+import path from 'path'
 
 // Import routes and database connection
 import authRoute from "./routes/auth.route.js";
@@ -16,6 +16,8 @@ import {app, server} from './socket/socket.js';
 dotenv.config(); // Load environment variables
 const PORT = process.env.PORT  
 
+const __dirname = path.resolve();
+
 // Middlewares
 app.use(cookieParser());
 app.use(express.json());
@@ -24,6 +26,12 @@ app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/message", messageRoute);
 app.use("/api/users", userRoute);
+
+app.use(express.static(path.join(__dirname,"/frontend/dist")))
+
+app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,"frontend","dist","index.html"))
+})
 
 // Connect to database and start server
 server.listen(PORT, async () => {
