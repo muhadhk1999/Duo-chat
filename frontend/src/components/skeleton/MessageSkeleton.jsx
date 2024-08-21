@@ -1,22 +1,21 @@
 import React from 'react'
 
 const MessageSkeleton = () => {
-  return(
+  return (
     <>
-        <div className='flex gap-3 items-center'>
-            <div className='skeleton w-10 h-10 rounded-full shrink-0'></div>
-            <div className='flex flex-col gap-1'>
-                <div className='skeleton h-4 w-40'></div>
-                <div className='skeleton h-4 w-40'></div>
-            </div>
+      <div className='flex gap-3 items-center py-2'>
+        <div className='w-10 h-10 bg-gray-300 rounded-full animate-pulse'></div>
+        <div className='flex flex-col gap-1'>
+          <div className='h-4 w-40 bg-gray-300 rounded animate-pulse'></div>
+          <div className='h-4 w-40 bg-gray-300 rounded animate-pulse'></div>
         </div>
-        <div className='flex gap-3 items-center justify-end'>
-            <div className='flex flex-col gap-1'>
-                <div className='skeleton h-4 w-40'></div>
-            </div>
-            <div className='skeleton w-10 h-10 rounded-full shrink-0'></div>
+      </div>
+      <div className='flex gap-3 items-center justify-end py-2'>
+        <div className='flex flex-col gap-1'>
+          <div className='h-4 w-40 bg-gray-300 rounded animate-pulse'></div>
         </div>
-        
+        <div className='w-10 h-10 bg-gray-300 rounded-full animate-pulse'></div>
+      </div>
     </>
   )
 }
